@@ -13,6 +13,8 @@ app.use(express.json())
 app.use(cookieParser())
 app.use(cors({ origin: "*", credentials: true, }))
 
+app.use("/api/user", userRoutes)
+app.use("/api/auth", authRoutes)
 mongoose.connect(process.env.MONGO)
     .then(() => {
         console.log("Connected to mongodb!");
@@ -25,8 +27,6 @@ app.listen(port, () => {
     console.log(`Server is listening on port ${port}`);
 })
 
-app.use("https://stford-alternator-99.vercel.app/api/user", userRoutes)
-app.use("https://stford-alternator-99.vercel.app/api/auth", authRoutes)
 
 app.use((err, req, res, next) => {
     const statusCode = err.statusCode || 500;
