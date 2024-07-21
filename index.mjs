@@ -4,12 +4,14 @@ import dotenv from "dotenv"
 import userRoutes from "./routes/user.routes.mjs"
 import authRoutes from "./routes/auth.routes.mjs"
 import cookieParser from "cookie-parser"
+import cors from "cors"
 dotenv.config()
 
 const port = process.env.PORT || 3000
 const app = express()
 app.use(express.json())
 app.use(cookieParser())
+app.use(cors({ origin: "*", credentials: true, }))
 
 mongoose.connect(process.env.MONGO)
     .then(() => {
@@ -23,8 +25,8 @@ app.listen(port, () => {
     console.log(`Server is listening on port ${port}`);
 })
 
-app.use("/api/user", userRoutes)
-app.use("/api/auth", authRoutes)
+app.use("https://stford-alternator-99.vercel.app/api/user", userRoutes)
+app.use("https://stford-alternator-99.vercel.app/api/auth", authRoutes)
 
 app.use((err, req, res, next) => {
     const statusCode = err.statusCode || 500;
